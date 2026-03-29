@@ -1,0 +1,18 @@
+{
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "E:/tools/scoop/apps/mingw-winlibs-ucrt/current/include/**"
+      ],
+      "forcedInclude": [
+        "${workspaceFolder}/lc_common.h"
+      ],
+      "compilerPath": "E:/tools/scoop/apps/mingw-winlibs-ucrt/current/bin/g++.exe",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-gcc-x64"
+    }
+  ],
+  "version": 4
+}
