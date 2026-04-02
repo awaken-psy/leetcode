@@ -61,23 +61,29 @@
 class Solution {
    public:
     bool isSymmetric(TreeNode* root) {
+        // 用队列模拟"镜像对比"，每次入队都成对入队（左镜像位, 右镜像位）
         queue<TreeNode*> q;
-        q.push(root->left);
-        q.push(root->right);
+        q.push(root->left);   // 根的左子树
+        q.push(root->right);  // 根的右子树（与左互为镜像）
+
         while (!q.empty()) {
-            TreeNode* L = q.front();
-            q.pop();
-            TreeNode* R = q.front();
-            q.pop();
-            if (!L && !R) continue;             //both nullptr
-            if (!L || !R) return false;         //either nullptr
-            if (L->val != R->val) return false; 
+            // 每次取出一对节点，判断它们是否"镜像相等"
+            TreeNode* L = q.front(); q.pop();
+            TreeNode* R = q.front(); q.pop();
+
+            if (!L && !R) continue;             // 两个都是空，这对镜像合法，继续
+            if (!L || !R) return false;         // 一个空一个非空，不对称
+            if (L->val != R->val) return false; // 值不同，不对称
+
+            // 将下一层的镜像对入队
+            // 外侧：L的左孩子 对应 R的右孩子
             q.push(L->left);
-            q.push(R->right);  // 外侧
+            q.push(R->right);
+            // 内侧：L的右孩子 对应 R的左孩子
             q.push(L->right);
-            q.push(R->left);  // 内侧
+            q.push(R->left);
         }
-        return true;
+        return true; // 所有镜像对都通过检查
     }
 };
 // @lc code=end

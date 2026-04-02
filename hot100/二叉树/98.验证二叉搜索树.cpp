@@ -66,7 +66,22 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        
+        if(!root||(!root->left&&!root->right)){
+            return true;
+        }
+        long long lmax=LONG_LONG_MIN, rmin=LONG_LONG_MAX;
+        TreeNode* l = root->left;
+        while(l){
+            lmax = l->val;
+            l = l->right;
+        }
+        l = root->right;
+        while (l) {
+            rmin = l->val;
+            l = l->left;
+        }
+        return (lmax < root->val) && (rmin > root->val) && isValidBST(root->left) &&
+               isValidBST(root->right);
     }
 };
 // @lc code=end

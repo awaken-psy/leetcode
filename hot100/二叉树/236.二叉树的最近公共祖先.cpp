@@ -69,8 +69,36 @@
  */
 class Solution {
 public:
+    // 返回值含义：
+    // nullptr     → 当前子树中 p、q 都不存在
+    // 某个非空节点  → 找到了 p 或 q（还没找齐），或者找到了 LCA
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        
+        if(!root){
+            return nullptr;  // 空树，什么都没找到
+        }
+        if(root==p||root==q){
+            // 遇到 p 或 q 就直接返回，不再往下找
+            // 因为另一个节点要么在这棵子树里（则当前节点就是LCA），
+            // 要么在别处（则由上层的 left&&right 判断来确认LCA）
+            return root;
+        }
+
+        TreeNode* left  = lowestCommonAncestor(root->left,  p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+
+        if(left && right){
+            // p、q 分布在当前节点的两侧，当前节点是最深的"两边都有货"的节点
+            // 即 LCA
+            return root;
+        }
+        else if(left){
+            // 只有左边找到了东西，LCA 在左子树中，继续向上冒泡
+            return left;
+        }
+        else{
+            // 只有右边找到了东西（或两边都为空，返回 nullptr）
+            return right;
+        }
     }
 };
 // @lc code=end
