@@ -50,16 +50,21 @@
 // @lc code=start
 class Solution {
    public:
-    void rotatemat(vector<vector<int>>& mat, int n0) {
-        int lens = mat.size() - 2 * n0;
-        if(lens<=1){
-            return;
-        }
-        vector<int> save(mat[n0].begin() + n0, mat[n0].begin() + n0 + lens);
-        
-
-    }
+    // (i, j) → (j, n-1-i)
     void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+
+        // (i, j) → (j, i)
+        for (int i = 0; i < n; ++i) {
+            for (int j = i; j < n; ++j) {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+
+        // (j, i) → (j, n-1-i)
+        for (int i = 0; i < n; ++i) {
+            reverse(matrix[i].begin(), matrix[i].end());
+        }
     }
 };
 // @lc code=end
