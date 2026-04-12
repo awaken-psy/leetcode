@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(for f:*)",
-      "Bash(do echo:*)"
+      "Bash(do echo:*)",
+      "mcp__coplay-mcp__list_files"
     ]
   }
 }
