@@ -83,11 +83,12 @@ class Solution {
         if (s.empty()) {
             return true;
         }
+        
         stack<char> st;
         st.push(s[0]);
         int i = 1;  // 用于在string上移动
         while (!st.empty() || i < s.size()) {
-            char ch = s[i];
+            char ch = s[i++];
             if (ch == '(' || ch == '[' || ch == '{') {
                 st.push(ch);
             } else {
@@ -115,7 +116,6 @@ class Solution {
                         return false;
                 }
             }
-            i++;
         }
         return true;
     }

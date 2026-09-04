@@ -46,60 +46,39 @@
 
 // @lc code=start
 class Solution {
-   private:
-    enum Direction { left, right, up, down };
-    Direction dir;
-
    public:
-    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+    std::vector<int> spiralOrder(std::vector<std::vector<int>>& matrix) {
         int m = matrix.size();
         int n = matrix[0].size();
-        vector<int> res;
-        dir = (n > 1) ? right : down;
+        int top = 0, bottom = m - 1;
+        int left = 0, right = n - 1;
+        std::vector<int> result;
 
-        int stepx = n - 1;
-        int stepy = m - 1;
-        int curx = 0, cury = 0;
-        res.push_back(matrix[cury][curx]);
-        for (int idx = 0;; idx++) {
-            if ((dir == up || dir == down) && stepy == 0) break;
-            if ((dir == left || dir == right) && stepx == 0) break;
-            switch (dir) {
-                case up:
-                    for (int i = 1; i <= stepy; i++) {
-                        res.push_back(matrix[cury - i][curx]);
-                    }
-                    cury -= stepy;
-                    if (idx != 0) stepy--;
-                    dir = right;
-                    break;
-                case down:
-                    for (int i = 1; i <= stepy; i++) {
-                        res.push_back(matrix[cury + i][curx]);
-                    }
-                    cury += stepy;
-                    if (idx != 0) stepy--;
-                    dir = left;
-                    break;
-                case left:
-                    for (int i = 1; i <= stepx; i++) {
-                        res.push_back(matrix[cury][curx - i]);
-                    }
-                    curx -= stepx;
-                    if (idx != 0) stepx--;
-                    dir = up;
-                    break;
-                case right:
-                    for (int i = 1; i <= stepx; i++) {
-                        res.push_back(matrix[cury][curx + i]);
-                    }
-                    curx += stepx;
-                    if (idx != 0) stepx--;
-                    dir = down;
-                    break;
+        while (top <= bottom && left <= right) {
+            for (int j = left; j <= right; ++j) {
+                result.push_back(matrix[top][j]);
             }
+            ++top;
+            if (top > bottom) break;
+
+            for (int i = top; i <= bottom; ++i) {
+                result.push_back(matrix[i][right]);
+            }
+            --right;
+            if (left > right) break;
+
+            for (int j = right; j >= left; --j) {
+                result.push_back(matrix[bottom][j]);
+            }
+            --bottom;
+            if (top > bottom) break;
+
+            for (int i = bottom; i >= top; --i) {
+                result.push_back(matrix[i][left]);
+            }
+            ++left;  // 下一轮的 while 条件检查剩余区域。
         }
-        return res;
+        return result;
     }
 };
 // @lc code=end

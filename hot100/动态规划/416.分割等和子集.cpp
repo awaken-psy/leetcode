@@ -49,17 +49,22 @@ class Solution {
    public:
     // 从数组中选出若干个数，使其和恰好等于 sum / 2
     bool canPartition(vector<int>& nums) {
-
         int sum = accumulate(nums.begin(), nums.end(), 0);
         if (sum % 2 == 1) return false;
         int target = sum / 2;
 
-        // dp[j] = true  表示"目前考虑过的数字里，能凑出和为 j"
+        // dp[j] 表示 目前考虑过的数字里，能凑出和为 j
         vector<bool> dp(target + 1, false);
         dp[0] = true;
-        for (int j = 0; j < nums.size(); j++) {        // 外层：逐个考虑每个数字
-            for (int i = target; i >= nums[j]; i--) {  // 内层：容量从大到小
-                dp[i] = dp[i] || dp[i - nums[j]];
+
+        // 顺序无关的dp
+        // x = 2 -> 2
+        // x = 5 -> 2 5 7
+        // x = 4 -> 2 5 7 4 6 9 11
+        for (int i = 0; i < nums.size(); i++) {
+            int x = nums[i];
+            for (int j = target; j >= x; j--) {
+                dp[j] = dp[j] || dp[j - x];
             }
         }
 

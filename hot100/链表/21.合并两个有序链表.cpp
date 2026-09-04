@@ -72,7 +72,6 @@ public:
             return list1;
 
         // NOTE: 必须要有一个真实节点，否则会报ub
-        // ListNode *s, *res = s;  // s 未初始化，res = s 也是垃圾值
         ListNode head, *s = &head;
         while (list1 && list2)
         {

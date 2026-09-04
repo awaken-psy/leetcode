@@ -13,7 +13,8 @@
  * Total Submissions: 2.1M
  * Testcase Example:  '[1,2,2,1]'
  *
- * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。如果是，返回 true ；否则，返回 false 。
+ * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。如果是，返回 true ；否则，返回 false
+ * 。
  *
  *
  *
@@ -57,13 +58,12 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution
-{
-public:
-    ListNode* reverselist(ListNode* head){
+class Solution {
+   public:
+    ListNode* reverselist(ListNode* head) {
         ListNode *prev = nullptr, *curr = head;
-        while(curr){
-            ListNode *next = curr->next;
+        while (curr) {
+            ListNode* next = curr->next;
             curr->next = prev;
             prev = curr;
             curr = next;
@@ -71,24 +71,17 @@ public:
         return prev;
     }
 
-    bool isPalindrome(ListNode *head)
-    {
-        if (!head || !head->next)
-        {
-            return head;
-        }
-
+    bool isPalindrome(ListNode* head) {
         ListNode *fast = head, *slow = head;
-        while (fast && fast->next)
-        {
+        while (fast && fast->next) {
             slow = slow->next;
             fast = fast->next->next;
         }
 
-        ListNode *end = reverselist(slow);
+        ListNode* end = reverselist(slow);
         ListNode *p1 = head, *p2 = end;
-        while(p2){
-            if(p1->val!=p2->val){
+        while (p2) {
+            if (p1->val != p2->val) {
                 return false;
             }
             p1 = p1->next;

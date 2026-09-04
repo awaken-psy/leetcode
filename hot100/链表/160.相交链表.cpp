@@ -126,30 +126,14 @@ public:
         }
         // NOTE: wrong one
         // 修改了公共路径的结尾，导致晚到达的跳转失败
-        // while (la != lb)
-        // {
+        // while (la != lb){
         //     if (la->next == nullptr)
-        //     {
         //         la->next = headB;
-        //     }
         //     if (lb->next == nullptr)
-        //     {
         //         lb->next = headA;
-        //     }
-        //     la = la->next;
-        //     lb = lb->next;
+        //     la = la->next; lb = lb->next;
         // }
         return la;
     }
 };
-// class Solution
-// {
-// public:
-//     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
-//     {
-//         ListNode *la = headA, *lb = headB;
-
-//         return la;
-//     }
-// };
 // @lc code=end

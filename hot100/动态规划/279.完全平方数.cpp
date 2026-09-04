@@ -48,11 +48,12 @@
 class Solution {
    public:
     int numSquares(int n) {
+        // dp[i] 表示 数字 i 最少需要凑的完全平方数个数
         vector<int> dp(n + 1, n);  // 最坏情况
         dp[0] = 0;
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j * j <= i; j++) {
-                dp[i] = min(dp[i], dp[i - j * j] + 1);
+                dp[i] = min(dp[i - j * j] + 1, dp[i]);
             }
         }
         return dp[n];

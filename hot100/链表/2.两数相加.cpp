@@ -70,50 +70,70 @@
 class Solution {
    public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode dummy(0);
+        ListNode* tail = &dummy;
+        int carry = 0;
+
+        while (l1 || l2 || carry) {
+            int sum = carry;
+            if (l1) {
+                sum += l1->val;
+                l1 = l1->next;
+            }
+            if (l2) {
+                sum += l2->val;
+                l2 = l2->next;
+            }
+
+            tail->next = new ListNode(sum % 10);
+            carry = sum / 10;
+            tail = tail->next;
+        }
+
+        return dummy.next;
+    }
+};
+// @lc code=end
+
+/*
+class Solution {
+   public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         // save the begin
         ListNode* head = l1;
         bool carry = false;
         while (1) {
-            l1->val = l1->val + l2->val + (int)carry;
-            if (l1->val >= 10) {
-                l1->val %= 10;
-                carry = true;
-            } else {
-                carry = false;
-            }
+            l1->val += l2->val + (int)carry;
+            carry = (l1->val >= 10) ? true : false;
+            l1->val %= 10;
+
             if (!l1->next || !l2->next) {
                 break;
             }
-            l1 = l1->next;
-            l2 = l2->next;
+            l1 = l1->next, l2 = l2->next;
         }
-        
 
         // case1:l1 goes to end,l2 remains,l1's end point to l2 next
         // case2:l2 goes to end,l1 remains,do nothing
         // case3:both goes to end,do nothing
         if (!l1->next && l2->next) {
             l1->next = l2->next;
-        } 
+        }
 
         // until l1 point to the last node
         while (l1->next) {
             l1 = l1->next;
             l1->val += (int)carry;
-            if (l1->val == 10) {
-                l1->val = 0;
-                carry = true;
-            } else {
-                carry = false;
-            }
+            carry = (l1->val >= 10) ? true : false;
+            l1->val %= 10;
         }
 
         // handle the final node
-        if(carry){
+        if (carry) {
             l1->next = new ListNode(1);
         }
 
         return head;
     }
 };
-// @lc code=end
+*/

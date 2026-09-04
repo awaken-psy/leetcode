@@ -63,24 +63,18 @@
 class Solution {
    public:
     ListNode* swapPairs(ListNode* head) {
-        if (!head || !head->next) {
-            return head;
-        }
-        // at least 2 node
-        // dum1->dum2->node1(head)->node2->...
         ListNode dummy(0, head);
-        ListNode *prev = &dummy, *curra = head, *currb = head->next;
-        while (curra && currb) {
-            ListNode* next_curra = currb->next;
+        ListNode* prev = &dummy;
 
-            prev->next = currb;     //a
-            currb->next = curra;    //b
-            // same as b,but necessary for final loop
-            curra->next = next_curra;
+        while (prev->next && prev->next->next) {
+            ListNode* first = prev->next;
+            ListNode* second = first->next;
 
-            prev = curra;
-            curra = next_curra;
-            currb = (next_curra) ? next_curra->next : nullptr;
+            first->next = second->next;
+            second->next = first;
+            prev->next = second;
+
+            prev = first;  // 交换后的尾节点，也是下一对的前驱。
         }
         return dummy.next;
     }

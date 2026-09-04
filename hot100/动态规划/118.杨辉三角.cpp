@@ -52,13 +52,15 @@ class Solution {
     vector<vector<int>> generate(int numRows) {
         vector<vector<int>> dp;
         for (int i = 0; i < numRows; i++) {
-            dp.push_back(vector<int>{});
+            vector<int> line;
             for (int j = 0; j <= i; j++) {
-                if (j == 0 || j == i)
-                    dp[i].push_back(1);
-                else
-                    dp[i].push_back(dp[i - 1][j] + dp[i - 1][j - 1]);
+                if (j == 0 || j == i) {
+                    line.push_back(1);
+                } else {
+                    line.push_back(dp[i - 1][j - 1] + dp[i - 1][j]);
+                }
             }
+            dp.push_back(line);
         }
         return dp;
     }

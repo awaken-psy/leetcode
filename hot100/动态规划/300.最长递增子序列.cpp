@@ -65,20 +65,20 @@ class Solution {
    public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
+        if (n <= 1) return n;
 
         // dp[i] = 以 nums[i] 结尾的最长递增子序列长度
-        // 取max(dp[i])
         vector<int> dp(n, 1);
-        int maxnum = INT_MIN;
-
+        int maxnum = 1;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[j] < nums[i]) {
+                if(nums[i] > nums[j]){
                     dp[i] = max(dp[i], dp[j] + 1);
                 }
             }
             maxnum = max(maxnum, dp[i]);
         }
+
         return maxnum;
     }
 };
