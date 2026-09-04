@@ -64,7 +64,7 @@
 // @lc code=start
 class MinStack {
    private:
-    stack<int> s;
+    stack<int> st;
     stack<int> minst;
 
    public:
@@ -72,31 +72,21 @@ class MinStack {
     }
 
     void push(int val) {
-        if (s.empty()) {
-            s.push(val);
-            minst.push(val);
-        } else {
-            if (minst.top() < val) {
-                s.push(val);
-            } else {  // 新来的更小
-                s.push(val);
-                minst.push(val);
-            }
+        if (minst.empty() || val <= minst.top()) {
+            minst.push(val);  // 新来的更小或相等
         }
+        st.push(val);
     }
 
     void pop() {
-        if (s.top() == minst.top()) {//顶端为最小值
-            s.pop();
+        if (st.top() == minst.top()) {  // 顶端为最小值
             minst.pop();
         }
-        else{
-            s.pop();
-        }
+        st.pop();
     }
 
     int top() {
-        return s.top();
+        return st.top();
     }
 
     int getMin() {

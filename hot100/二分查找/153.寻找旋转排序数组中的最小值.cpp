@@ -74,26 +74,17 @@ class Solution {
     int findMin(vector<int>& nums) {
         int n = nums.size();
         int left = 0, right = n - 1;
-        int minnum = INT_MAX;
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            //   nums[mid] > nums[right] → 左侧有序，最小值在右边
-            //   nums[mid] <= nums[right] → 右侧有序，最小值在左边（含 mid）
-            // 必须与 nums[right] 比而非 nums[left]：
-            //   mid 向下取整，区间剩2个元素时 left==mid，nums[left]和nums[mid]是同一元素，比了没信息
-            //   而 right>mid 在区间>1时恒成立，nums[right]和nums[mid]必然不同，比较有意义
-            //  mid的计算方式决定了天然向左偏
-            bool isleftorder = nums[right] < nums[mid];
 
-            if (isleftorder) {
-                minnum = min(nums[left], minnum);
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] > nums[right]) {
                 left = mid + 1;
             } else {
-                minnum = min(nums[mid], minnum);
-                right = mid - 1;
+                right = mid;
             }
         }
-        return minnum;
+        return nums[left];
     }
 };
 // @lc code=end

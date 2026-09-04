@@ -54,16 +54,19 @@ class Solution {
    public:
     vector<int> dailyTemperatures(vector<int>& temperatures) {
         int n = temperatures.size();
-        vector<int> res(n, 0);
-        stack<pair<int, int>> s;  // temp索引, 数值
-        for (int i = 0; i < n; i++) {
-            while (!s.empty() && temperatures[i] > s.top().second) {
-                res[s.top().first] = i - s.top().first;
-                s.pop();
+        std::vector<int> answer(n, 0);
+        std::stack<int> pending;
+
+        for (int i = 0; i < n; ++i) {
+            while (!pending.empty() && temperatures[i] > temperatures[pending.top()]) {
+                int j = pending.top();
+                pending.pop();
+                answer[j] = i - j;
             }
-            s.push({i, temperatures[i]});
+            pending.push(i);
         }
-        return res;
+
+        return answer;
     }
 };
 // @lc code=end

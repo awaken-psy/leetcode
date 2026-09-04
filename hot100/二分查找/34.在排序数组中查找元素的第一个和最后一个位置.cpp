@@ -61,6 +61,7 @@ class Solution {
         int n = nums.size();
         int left = 0, right = n;
         int lbound, rbound;
+
         while (left < right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] < target) {  // 停在第一个target
@@ -69,6 +70,7 @@ class Solution {
                 right = mid;
             }
         }
+
         // left一定大于0
         lbound = (left < n && nums[left] == target) ? left : -1;
 
@@ -81,6 +83,7 @@ class Solution {
                 right = mid;
             }
         }
+        
         // left-1一定小于n
         rbound = (left >= 1 && nums[left - 1] == target) ? left - 1 : -1;
         return vector<int>{lbound, rbound};

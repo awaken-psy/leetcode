@@ -53,30 +53,25 @@
 // @lc code=start
 class Solution {
    public:
-    bool isorder(int left, int right) {
-        return left < right;
-    }
     int search(vector<int>& nums, int target) {
         int n = nums.size();
-        int left = 0, right = n;
-        while (left < right) {
+        int left = 0, right = n - 1;
+        while (left <= right) {
             int mid = left + (right - left) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            }
+            if (nums[mid] == target) return mid;
 
-            if (isorder(nums[left], nums[mid])) {                             // 左有序
-                if (nums[mid] >= target && nums[left] <= target) {  // 在左边
-                    right = mid;
-                } else {
+            // 只有一个元素时依然有序，要有等号
+            if (nums[left] <= nums[mid]) {
+                // 左半有序
+                if (nums[left] <= target && target < nums[mid])
+                    right = mid - 1;
+                else
                     left = mid + 1;
-                }
             } else {
-                if (nums[right - 1] >= target && nums[mid] <= target) {  // 在右边
+                if (nums[right] >= target && target > nums[mid])
                     left = mid + 1;
-                } else {
-                    right = mid;
-                }
+                else
+                    right = mid - 1;
             }
         }
         return -1;

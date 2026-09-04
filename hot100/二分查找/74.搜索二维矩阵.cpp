@@ -57,41 +57,20 @@ class Solution {
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
         int m = matrix.size();
         int n = matrix[0].size();
-        int row;
-        int left = 0, right = m;
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            if (matrix[mid][0] < target) {
-                left = mid + 1;
-            }
-            else if(matrix[mid][0] > target) {
-                right = mid;
-            }
-            else{
-                return true;
-            }
-        }
-
-        // 右边界
-        if (left == 0 ) {
-            return false;
-        } else {
-            row = left - 1;
-            right = n - 1;
-            left = 0;
-        }
+        int left = 0, right = m * n - 1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            if (matrix[row][mid] < target) {
-                left = mid + 1;
-            } else if (matrix[row][mid] > target) {
-                right = mid - 1;
-            } else {
-                return true;
-            }
-        }
+            int row = mid / n;
+            int col = mid % n;
 
+            if (matrix[row][col] < target)
+                left = mid + 1;
+            else if (matrix[row][col] > target)
+                right = mid - 1;
+            else
+                return true;
+        }
         return false;
     }
 };

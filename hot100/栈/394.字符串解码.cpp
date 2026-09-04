@@ -76,24 +76,25 @@ class Solution {
         string cur;                    // 当前正在构建的字符串
         int num = 0;                   // 当前正在解析的数字
 
-        for (char c : s) {
-            if (isdigit(c)) {
-                num = num * 10 + (c - '0');  // 处理多位数
-            } else if (c == '[') {
-                stk.push({num, cur});  // 保存现场
+        for (char ch : s) {
+            if (ch >= '0' && ch <= '9') {
+                num = num * 10 + ch - '0';
+            } else if (ch == '[') {
+                stk.push({num, cur});
                 cur = "";
                 num = 0;
-            } else if (c == ']') {
-                auto [k, prev] = stk.top();  // C++17 结构化绑定
+            } else if (ch == ']') {
+                auto [k, prev] = stk.top();
                 stk.pop();
-                string repeated;
-                for (int i = 0; i < k; i++) 
-                    repeated += cur;
-                cur = prev + repeated;
+                for (int i = 0; i < k; i++) {
+                    prev += cur;
+                }
+                cur = prev;
             } else {
-                cur += c;
+                cur += ch;
             }
         }
+
         return cur;
     }
 };
